@@ -4,11 +4,11 @@ import com.example.demo.proto.HelloRequest;
 import com.example.demo.proto.SimpleGrpc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.grpc.test.autoconfigure.AutoConfigureInProcessTransport;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.grpc.client.GrpcChannelFactory;
-import org.springframework.grpc.test.AutoConfigureInProcessTransport;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
