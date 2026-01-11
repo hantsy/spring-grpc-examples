@@ -2,17 +2,18 @@ package com.example.demo;
 
 import com.example.demo.proto.*;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 class HelloGrpcServerService extends SimpleGrpc.SimpleImplBase {
-    private static Logger log = LoggerFactory.getLogger(HelloGrpcServerService.class);
 
     @Override
     public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
-        log.info("Hello {}", req.getName());
+        log.info("Hello: {}", req.getName());
         if (req.getName().startsWith("error")) {
             throw new IllegalArgumentException("Bad name: " + req.getName());
         }
@@ -26,7 +27,7 @@ class HelloGrpcServerService extends SimpleGrpc.SimpleImplBase {
 
     @Override
     public void streamHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
-        log.info("Hello {}", req.getName());
+        log.info("Hello Stream: {}", req.getName());
         int count = 0;
         while (count < 10) {
             HelloReply reply = HelloReply.newBuilder().setMessage("Hello(" + count + ") ==> " + req.getName()).build();

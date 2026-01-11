@@ -16,14 +16,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureInProcessTransport
 class InProcessTests {
 
-    @TestConfiguration
-    static class TestConfig {
-
-        @Bean
-        public SimpleGrpc.SimpleBlockingStub blockingStub(GrpcChannelFactory channelFactory) {
-            return SimpleGrpc.newBlockingStub(channelFactory.createChannel("inprocess"));
-        }
-    }
+//    @TestConfiguration
+//    static class TestConfig {
+//
+//        @Bean
+//        public SimpleGrpc.SimpleBlockingStub blockingStub(GrpcChannelFactory channelFactory) {
+//            return SimpleGrpc.newBlockingStub(channelFactory.createChannel("inprocess"));
+//        }
+//    }
 
     @Autowired
     SimpleGrpc.SimpleBlockingStub blockingStub;
