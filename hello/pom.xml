@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 	    <java.version>25</java.version>
-	    <grpc.version>1.77.1</grpc.version>
+	    <grpc.version>1.78.0</grpc.version>
 	    <protobuf-java.version>4.33.2</protobuf-java.version>
 	    <spring-grpc.version>1.0.1</spring-grpc.version>
 	</properties>
