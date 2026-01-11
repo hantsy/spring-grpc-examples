@@ -27,20 +27,26 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>25</java.version>
-		<grpc.version>1.77.0</grpc.version>
-		<protobuf-java.version>4.33.1</protobuf-java.version>
-		<spring-grpc.version>1.0.1</spring-grpc.version>
+	    <java.version>25</java.version>
+	    <grpc.version>1.77.1</grpc.version>
+	    <protobuf-java.version>4.33.2</protobuf-java.version>
+	    <spring-grpc.version>1.0.1</spring-grpc.version>
 	</properties>
 	<dependencies>
-		<dependency>
+	    <dependency>
 			<groupId>io.grpc</groupId>
 			<artifactId>grpc-services</artifactId>
-		</dependency>
-		<dependency>
+	    </dependency>
+	    <dependency>
 			<groupId>org.springframework.grpc</groupId>
-			<artifactId>spring-grpc-server-web-spring-boot-starter</artifactId>
-		</dependency>
+			<artifactId>spring-grpc-spring-boot-starter</artifactId>
+	    </dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+    	</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -67,46 +73,53 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>kr.motd.maven</groupId>
-				<artifactId>os-maven-plugin</artifactId>
-				<version>1.7.1</version>
-				<executions>
-					<execution>
-						<id>initialize</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>detect</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.xolstice.maven.plugins</groupId>
-				<artifactId>protobuf-maven-plugin</artifactId>
-				<version>0.6.1</version>
-				<configuration>
-					<protocArtifact>com.google.protobuf:protoc:${protobuf-java.version}:exe:${os.detected.classifier}</protocArtifact>
-					<pluginId>grpc-java</pluginId>
-					<pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
-				</configuration>
-				<executions>
-					<execution>
-						<id>compile</id>
-						<goals>
-							<goal>compile</goal>
-							<goal>compile-custom</goal>
-						</goals>
-						<configuration>
-							<pluginParameter>jakarta_omit,@generated=omit</pluginParameter>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.github.ascopes</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+        <version>4.0.3</version>
+        <configuration>
+          <protoc>${protobuf-java.version}</protoc>
+          <binaryMavenPlugins>
+            <binaryMavenPlugin>
+              <groupId>io.grpc</groupId>
+              <artifactId>protoc-gen-grpc-java</artifactId>
+              <version>${grpc.version}</version>
+              <options>@generated=omit</options>
+            </binaryMavenPlugin>
+          </binaryMavenPlugins>
+        </configuration>
+        <executions>
+          <execution>
+            <id>generate</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
 		</plugins>
 	</build>
-
 </project>
